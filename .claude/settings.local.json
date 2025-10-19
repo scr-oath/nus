@@ -9,7 +9,17 @@
       "Bash(git commit:*)",
       "Bash(gh repo create:*)",
       "Bash(git remote set-url:*)",
-      "Bash(uv run:*)"
+      "Bash(uv run:*)",
+      "Bash(GIT_SSH_COMMAND='ssh -i /Users/scr/.ssh/scr_oath2' git push:*)",
+      "Bash(gh repo view:*)",
+      "Bash(gh api:*)",
+      "Bash(env)",
+      "Bash(gh secret set:*)",
+      "Bash(gh workflow run:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh run view:*)",
+      "Bash(open https://scr-oath.github.io/nus/)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []
