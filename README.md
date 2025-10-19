@@ -41,8 +41,8 @@ cp .env.example .env
 
 ### 2. Get Anthropic API Key
 
-1. Sign up at [Anthropic](https://console.anthropic.com/)
-2. Create an API key
+1. Sign up at [Anthropic Console](https://console.anthropic.com/)
+2. Go to API Keys and create a new key
 3. Add to `.env`:
    ```bash
    ANTHROPIC_API_KEY=your_api_key_here
@@ -260,11 +260,12 @@ The AI prompt in `prompts/categorization.md` is the key to customization:
 Using Claude 3.5 Sonnet:
 - ~100 articles/day × $0.003/1K tokens × ~500 tokens/article = **~$0.15/day**
 - Monthly: **~$4.50**
+- New accounts get **$5 in free credits**
 
 Tips to reduce costs:
 - Reduce number of feeds
 - Lower `MAX_CONCURRENT_API_CALLS`
-- Use Claude 3 Haiku for cheaper analysis
+- Use Claude 3 Haiku for cheaper analysis (~70% less)
 
 ## License
 

@@ -4,7 +4,12 @@
       "Bash(uv init:*)",
       "Bash(uv sync:*)",
       "Bash(gh auth status:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(gh auth login:*)",
+      "Bash(git commit:*)",
+      "Bash(gh repo create:*)",
+      "Bash(git remote set-url:*)",
+      "Bash(uv run:*)"
     ],
     "deny": [],
     "ask": []

@@ -79,9 +79,11 @@ NUS is an AI-powered daily news curation system that:
 
 - **Never commit `.env`** (contains API keys)
 - **Always use `uv run`** for running scripts
+- **Use oss-git function** for git operations (personal account)
 - **GitHub Pages** deploys from `docs/` directory
 - **localStorage** state is browser-specific (no sync)
 - **RSS feeds** can be flaky - error handling is critical
+- **Claude API** costs ~$4.50/month for 100 articles/day (new accounts get $5 free)
 
 ## User's Goals
 
