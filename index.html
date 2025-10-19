@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUS - Daily News Digest - October 19, 2025</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --read-bg: #f1f5f9;
+            --saved-color: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem 1rem;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            font-size: 0.9rem;
+        }
+
+        .stat strong {
+            color: var(--primary-color);
+        }
+
+        .category-section {
+            margin-bottom: 2rem;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: var(--card-bg);
+            border-radius: 8px 8px 0 0;
+            border-left: 4px solid var(--primary-color);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .category-header h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .article-count {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+        }
+
+        .articles {
+            background: var(--card-bg);
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .article {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.2s;
+        }
+
+        .article:last-child {
+            border-bottom: none;
+        }
+
+        .article.read {
+            background-color: var(--read-bg);
+            opacity: 0.7;
+        }
+
+        .article-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-color);
+            text-decoration: none;
+            flex: 1;
+        }
+
+        .article-title:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        .article-meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .article-summary {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+        }
+
+        .article-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            padding: 0.4rem 0.9rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .btn-read {
+            background: var(--border-color);
+            color: var(--text-color);
+        }
+
+        .btn-read:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-save {
+            background: var(--saved-color);
+            color: white;
+        }
+
+        .btn-save:hover {
+            background: #d97706;
+        }
+
+        .btn-save.saved {
+            background: #065f46;
+        }
+
+        .saved-indicator {
+            display: inline-block;
+            margin-left: 0.5rem;
+            color: var(--saved-color);
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 0.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .article-header {
+                flex-direction: column;
+            }
+
+            .article-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>NUS - Daily News Digest</h1>
+            <p class="subtitle">Sunday, October 19, 2025 at 02:07 AM</p>
+            <div class="stats">
+                <div class="stat"><strong>203</strong> articles fetched</div>
+                <div class="stat"><strong>203</strong> filtered</div>
+                <div class="stat"><strong>99.0%</strong> success rate</div>
+            </div>
+        </header>
+
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+
+        <footer>
+            <p>Generated by NUS - AI-powered news curation</p>
+            <p>Powered by Claude API | Using localStorage for read/save tracking</p>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize from localStorage
+        const readArticles = new Set(JSON.parse(localStorage.getItem('readArticles') || '[]'));
+        const savedArticles = new Set(JSON.parse(localStorage.getItem('savedArticles') || '[]'));
+
+        // Apply saved state on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            readArticles.forEach(url => {
+                const article = document.querySelector(`.article[data-url="${url}"]`);
+                if (article) {
+                    article.classList.add('read');
+                    const btn = article.querySelector('.btn-read');
+                    if (btn) btn.textContent = 'Mark as Unread';
+                }
+            });
+
+            savedArticles.forEach(url => {
+                const article = document.querySelector(`.article[data-url="${url}"]`);
+                if (article) {
+                    const btn = article.querySelector('.btn-save');
+                    if (btn) {
+                        btn.textContent = 'Saved';
+                        btn.classList.add('saved');
+                    }
+                }
+            });
+        });
+
+        function toggleCategory(categoryId) {
+            const articles = document.getElementById(categoryId);
+            if (articles.style.display === 'none') {
+                articles.style.display = 'block';
+            } else {
+                articles.style.display = 'none';
+            }
+        }
+
+        function markAsRead(url) {
+            readArticles.add(url);
+            localStorage.setItem('readArticles', JSON.stringify([...readArticles]));
+        }
+
+        function toggleRead(url) {
+            const article = document.querySelector(`.article[data-url="${url}"]`);
+            const btn = article.querySelector('.btn-read');
+
+            if (readArticles.has(url)) {
+                readArticles.delete(url);
+                article.classList.remove('read');
+                btn.textContent = 'Mark as Read';
+            } else {
+                readArticles.add(url);
+                article.classList.add('read');
+                btn.textContent = 'Mark as Unread';
+            }
+
+            localStorage.setItem('readArticles', JSON.stringify([...readArticles]));
+        }
+
+        function toggleSave(url) {
+            const article = document.querySelector(`.article[data-url="${url}"]`);
+            const btn = article.querySelector('.btn-save');
+
+            if (savedArticles.has(url)) {
+                savedArticles.delete(url);
+                btn.textContent = 'Save for Later';
+                btn.classList.remove('saved');
+            } else {
+                savedArticles.add(url);
+                btn.textContent = 'Saved';
+                btn.classList.add('saved');
+            }
+
+            localStorage.setItem('savedArticles', JSON.stringify([...savedArticles]));
+        }
+    </script>
+</body>
+</html>
