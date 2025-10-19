@@ -20,7 +20,7 @@ class Settings(BaseSettings):
 
     # API Configuration
     anthropic_api_key: str = Field(..., alias="ANTHROPIC_API_KEY")
-    claude_model: str = "claude-3-5-sonnet-20240620"
+    claude_model: str = "claude-3-haiku-20240307"
     max_tokens: int = 1024
     temperature: float = 0.3
 
