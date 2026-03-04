@@ -75,12 +75,17 @@ class BaseAnalyzer(ABC):
     def _parse_response(response: str) -> dict:
         """Parse structured response (common for all providers)."""
         import json
+        import re
 
         from .exceptions import AnalysisError
         from .models import Category
 
+        # Strip markdown code fences (```json ... ```) that LLMs often add
+        cleaned = re.sub(r"^```(?:json)?\s*\n?", "", response.strip())
+        cleaned = re.sub(r"\n?```\s*$", "", cleaned)
+
         try:
-            data = json.loads(response)
+            data = json.loads(cleaned)
             return {
                 "category": Category(data["category"]),
                 "is_clickbait": data["is_clickbait"],
