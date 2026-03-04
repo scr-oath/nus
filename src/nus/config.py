@@ -29,7 +29,7 @@ class Settings(BaseSettings):
 
     # Model Configuration
     anthropic_model: str = "claude-3-5-sonnet-20241022"
-    gemini_model: str = "gemini-3-1-flash-lite"
+    gemini_model: str = "gemini-3.1-flash-lite"
     max_tokens: int = 1024
     temperature: float = 0.3
 
