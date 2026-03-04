@@ -1,6 +1,5 @@
 """Provider-specific article analyzer implementations."""
 
-import asyncio
 from dataclasses import dataclass
 
 import anthropic
@@ -61,7 +60,7 @@ class AnthropicAnalyzer(BaseAnalyzer):
                 )
 
             except Exception as e:
-                raise AnalysisError(f"Claude API error: {e}")
+                raise AnalysisError(f"Claude API error: {e}") from e
 
 
 class GeminiAnalyzer(BaseAnalyzer):
@@ -74,11 +73,9 @@ class GeminiAnalyzer(BaseAnalyzer):
             temperature=config.temperature,
             max_concurrent=config.max_concurrent,
         )
-        import google.generativeai as genai
+        from google import genai
 
-        genai.configure(api_key=config.api_key)
-        self.client = genai.GenerativeModel(config.model)
-        self.genai = genai
+        self.client = genai.Client(api_key=config.api_key)
 
     async def _analyze_article(
         self, article: Article, filter_clickbait: bool = True
@@ -88,14 +85,21 @@ class GeminiAnalyzer(BaseAnalyzer):
             prompt = self._build_prompt(article)
 
             try:
-                # google-generativeai is sync, so use asyncio.to_thread
-                response = await asyncio.to_thread(
-                    self._call_gemini,
-                    prompt,
+                from google.genai import types
+
+                response = await self.client.aio.models.generate_content(
+                    model=self.model,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        max_output_tokens=self.max_tokens,
+                        temperature=self.temperature,
+                    ),
                 )
 
-                # Parse structured response
-                parsed = self._parse_response(response)
+                if not response.text:
+                    raise AnalysisError("No text content in Gemini response")
+
+                parsed = self._parse_response(response.text)
 
                 return AnalysisResult(
                     article=article,
@@ -105,27 +109,7 @@ class GeminiAnalyzer(BaseAnalyzer):
                     reasoning=parsed.get("reasoning"),
                 )
 
+            except AnalysisError:
+                raise
             except Exception as e:
-                raise AnalysisError(f"Gemini API error: {e}")
-
-    def _call_gemini(self, prompt: str) -> str:
-        """Synchronous wrapper for Gemini API call."""
-        generation_config = self.genai.types.GenerationConfig(
-            max_output_tokens=self.max_tokens,
-            temperature=self.temperature,
-        )
-        response = self.client.generate_content(
-            prompt,
-            generation_config=generation_config,
-        )
-        # Extract text from response, handling multiple content blocks
-        if hasattr(response, "text"):
-            return response.text
-        # Fallback: concatenate text from parts
-        text_parts = []
-        for part in response.parts:
-            if hasattr(part, "text"):
-                text_parts.append(part.text)
-        if not text_parts:
-            raise AnalysisError("No text content in Gemini response")
-        return "".join(text_parts)
+                raise AnalysisError(f"Gemini API error: {e}") from e
