@@ -12,6 +12,8 @@ dependencies = [
     "python-dotenv>=1.0.1",
     "jinja2>=3.1.4",
     "loguru>=0.7.2",
+    "google-generativeai>=0.8.6",
+    "dependency-injector>=4.48.3",
 ]
 
 [project.optional-dependencies]

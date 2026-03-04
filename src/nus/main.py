@@ -2,12 +2,11 @@
 
 import asyncio
 import sys
-from pathlib import Path
 
 from loguru import logger
 
 from .config import Settings
-from .orchestrator import NewsOrchestrator
+from .container import Container
 
 
 def setup_logging() -> None:
@@ -27,11 +26,13 @@ def main() -> None:
     try:
         logger.info("NUS - News Curation System starting...")
 
-        # Load settings
-        settings = Settings()
+        # Initialize DI container
+        container = Container()
+        # Provide Settings instance to the container
+        container.config.override(Settings())
 
-        # Run the orchestrator
-        orchestrator = NewsOrchestrator(settings)
+        # Get orchestrator with all dependencies injected
+        orchestrator = container.orchestrator()
         digest = asyncio.run(orchestrator.run())
 
         logger.success(

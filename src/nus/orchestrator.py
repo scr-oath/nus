@@ -1,35 +1,25 @@
 """Main workflow coordinator for news curation."""
 
-import asyncio
+from dataclasses import dataclass
 from datetime import datetime
-from pathlib import Path
 
 from loguru import logger
 
-from .analyzer import ArticleAnalyzer
+from .base_analyzer import BaseAnalyzer
 from .config import Settings, load_feeds, load_prompt_template
 from .fetcher import RSSFetcher
 from .models import Article, Category, Digest, RSSFeed
 from .renderer import HTMLRenderer
 
 
-class NewsOrchestrator:
+@dataclass
+class Orchestrator:
     """Coordinates the entire news curation workflow."""
 
-    def __init__(self, settings: Settings):
-        self.settings = settings
-        self.fetcher = RSSFetcher(
-            timeout=settings.fetch_timeout,
-            max_concurrent=settings.max_concurrent_feeds,
-        )
-        self.analyzer = ArticleAnalyzer(
-            api_key=settings.anthropic_api_key,
-            model=settings.claude_model,
-            max_tokens=settings.max_tokens,
-            temperature=settings.temperature,
-            max_concurrent=settings.max_concurrent_api_calls,
-        )
-        self.renderer = HTMLRenderer()
+    analyzer: BaseAnalyzer
+    fetcher: RSSFetcher
+    renderer: HTMLRenderer
+    settings: Settings
 
     async def run(self) -> Digest:
         """Execute the complete curation pipeline."""
